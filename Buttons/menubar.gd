@@ -26,4 +26,5 @@ func _on_save_file_dialog_file_selected(path: String) -> void:
 
 
 func _on_new_wall_button_pressed() -> void:
+	Root.wall_edit_type = Root.WallEditType.NEW
 	wall_dialog.show()
