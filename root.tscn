@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://root.gd" id="1_7hbtw"]
 [ext_resource type="Script" path="res://Buttons/menubar.gd" id="1_38hau"]
 [ext_resource type="Script" path="res://WallsPanel/walls_panel.gd" id="3_10dl3"]
-[ext_resource type="Script" path="res://grid_generator.gd" id="3_dpsan"]
+[ext_resource type="Script" path="res://Graphics/grid_generator.gd" id="3_dpsan"]
 [ext_resource type="PackedScene" uid="uid://0k5vbnv4udth" path="res://WallDialog/wall_dialog.tscn" id="4_s4300"]
 [ext_resource type="Script" path="res://Graphics/wall_drawer.gd" id="5_gh4vr"]
 
@@ -71,7 +71,6 @@ script = ExtResource("3_10dl3")
 [node name="GridGenerator" type="Node2D" parent="."]
 position = Vector2(500, 300)
 script = ExtResource("3_dpsan")
-spacing = 50
 
 [node name="WallDrawer" type="Node2D" parent="."]
 script = ExtResource("5_gh4vr")
