@@ -42,10 +42,13 @@ func generate_container(wall_data: WallData, index: int) -> PanelContainer:
 	stylebox.bg_color = WALL_CONTAINER_COLOR
 	panel_container.add_theme_stylebox_override('panel', stylebox)
 	
+	var parent_container = BoxContainer.new()  # Contains wall container and delete button
+	parent_container.custom_minimum_size = Vector2(panel_node.size.x, 0)
+	
 	var container = WallContainer.new()
 	container.all_walls_index = index
 	container.vertical = true
-	container.custom_minimum_size = Vector2(panel_node.size.x, 0)
+	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	
 	var type_label = new_label('Type: static' if wall_data.type == 0 else 'Type: dynamic')
 	container.add_child(type_label)
@@ -71,7 +74,7 @@ func generate_container(wall_data: WallData, index: int) -> PanelContainer:
 			]
 			var oscillate_label = new_label(oscillate_string)
 			container.add_child(oscillate_label)
-		elif motion_type == 1:
+		elif motion_type == 1:  # Rotate
 			var rotate_string = 'Axis: %s    Speed: %s' % [
 				str(wall_data.data[2]),
 				snapped(wall_data.data[3], 0.01)
@@ -92,12 +95,24 @@ func generate_container(wall_data: WallData, index: int) -> PanelContainer:
 			root.wall_edit_type = root.WallEditType.MODIFY
 			root.wall_modify_index = wall_data.index
 			wall_dialog.show_with_data(wall_data)
+	var on_delete_pressed = func():
+		root.all_wall_data.pop_at(wall_data.index)
+		for i in range(wall_data.index, len(root.all_wall_data)):
+			root.all_wall_data[i].index -= 1
+		root.update_walls()
 	
 	panel_container.connect('mouse_entered', on_mouse_enter)
 	panel_container.connect('mouse_exited', on_mouse_exit)
 	panel_container.connect('gui_input', on_gui_input)
 	
-	panel_container.add_child(container)
+	var delete_button = Button.new()
+	delete_button.text = 'Delete'
+	delete_button.size_flags_horizontal = Control.SIZE_SHRINK_END
+	delete_button.connect('pressed', on_delete_pressed)
+	
+	parent_container.add_child(container)
+	parent_container.add_child(delete_button)
+	panel_container.add_child(parent_container)
 	return panel_container;
 
 
