@@ -1,0 +1,116 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2bkkykp0sajo"]
+
+[ext_resource type="Script" path="res://root.gd" id="1_7hbtw"]
+[ext_resource type="Script" path="res://Buttons/menubar.gd" id="1_38hau"]
+[ext_resource type="Script" path="res://grid_generator.gd" id="3_dpsan"]
+[ext_resource type="PackedScene" uid="uid://0k5vbnv4udth" path="res://WallDialog/wall_dialog.tscn" id="4_s4300"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sx7q6"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.230315, 0.230315, 0.230315, 1)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_7hbtw")
+
+[node name="Menubar" type="Node2D" parent="."]
+script = ExtResource("1_38hau")
+
+[node name="LoadButton" type="Button" parent="Menubar"]
+offset_right = 90.0
+offset_bottom = 31.0
+text = "Load Level"
+
+[node name="LoadFileDialog" type="FileDialog" parent="Menubar/LoadButton"]
+title = "Load Level"
+initial_position = 1
+size = Vector2i(700, 500)
+ok_button_text = "Open"
+mode_overrides_title = false
+file_mode = 0
+access = 2
+
+[node name="SaveButton" type="Button" parent="Menubar"]
+offset_left = 90.0
+offset_right = 179.0
+offset_bottom = 31.0
+text = "Save Level"
+
+[node name="SaveFileDialog" type="FileDialog" parent="Menubar/SaveButton"]
+title = "Save Level"
+initial_position = 1
+size = Vector2i(700, 500)
+ok_button_text = "Save"
+access = 2
+
+[node name="NewWallButton" type="Button" parent="Menubar"]
+offset_left = 179.0
+offset_right = 260.0
+offset_bottom = 31.0
+text = "New Wall
+"
+
+[node name="WallsPanel" type="PanelContainer" parent="."]
+offset_top = 32.0
+offset_right = 196.0
+offset_bottom = 532.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sx7q6")
+
+[node name="Wall1Container" type="BoxContainer" parent="WallsPanel"]
+layout_mode = 2
+size_flags_vertical = 0
+vertical = true
+
+[node name="P1Container" type="BoxContainer" parent="WallsPanel/Wall1Container"]
+layout_mode = 2
+
+[node name="x1Label" type="Label" parent="WallsPanel/Wall1Container/P1Container"]
+layout_mode = 2
+text = "x1:"
+
+[node name="x1Input" type="LineEdit" parent="WallsPanel/Wall1Container/P1Container"]
+layout_mode = 2
+select_all_on_focus = true
+
+[node name="y1Label" type="Label" parent="WallsPanel/Wall1Container/P1Container"]
+layout_mode = 2
+text = "y1:"
+
+[node name="y1Input" type="LineEdit" parent="WallsPanel/Wall1Container/P1Container"]
+layout_mode = 2
+select_all_on_focus = true
+
+[node name="P2Container" type="BoxContainer" parent="WallsPanel/Wall1Container"]
+layout_mode = 2
+
+[node name="x2Label" type="Label" parent="WallsPanel/Wall1Container/P2Container"]
+layout_mode = 2
+text = "x2:"
+
+[node name="x2Input" type="LineEdit" parent="WallsPanel/Wall1Container/P2Container"]
+layout_mode = 2
+select_all_on_focus = true
+
+[node name="y2Label" type="Label" parent="WallsPanel/Wall1Container/P2Container"]
+layout_mode = 2
+text = "y2:"
+
+[node name="y2Input" type="LineEdit" parent="WallsPanel/Wall1Container/P2Container"]
+layout_mode = 2
+select_all_on_focus = true
+
+[node name="GridGenerator" type="Node2D" parent="."]
+position = Vector2(500, 300)
+script = ExtResource("3_dpsan")
+
+[node name="WallDialog" parent="." instance=ExtResource("4_s4300")]
+visible = false
+
+[connection signal="pressed" from="Menubar/LoadButton" to="Menubar" method="_on_load_button_pressed"]
+[connection signal="file_selected" from="Menubar/LoadButton/LoadFileDialog" to="Menubar" method="_on_load_file_dialog_file_selected"]
+[connection signal="pressed" from="Menubar/SaveButton" to="Menubar" method="_on_save_button_pressed"]
+[connection signal="file_selected" from="Menubar/SaveButton/SaveFileDialog" to="Menubar" method="_on_save_file_dialog_file_selected"]
+[connection signal="pressed" from="Menubar/NewWallButton" to="Menubar" method="_on_new_wall_button_pressed"]
+[connection signal="confirmed" from="WallDialog" to="." method="_on_wall_dialog_confirmed"]
