@@ -3,6 +3,7 @@ extends Node
 @onready var load_file_dialog = $LoadButton/LoadFileDialog
 @onready var save_file_dialog = $SaveButton/SaveFileDialog
 @onready var wall_dialog = $"../WallDialog"
+@onready var root = $".."
 
 
 func _on_load_button_pressed() -> void:
@@ -26,5 +27,5 @@ func _on_save_file_dialog_file_selected(path: String) -> void:
 
 
 func _on_new_wall_button_pressed() -> void:
-	Root.wall_edit_type = Root.WallEditType.NEW
-	wall_dialog.show()
+	root.wall_edit_type = root.WallEditType.NEW
+	wall_dialog.show_default()

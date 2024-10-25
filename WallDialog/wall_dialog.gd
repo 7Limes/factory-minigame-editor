@@ -28,11 +28,15 @@ class_name WallDialog
 
 
 var decimal_regex: RegEx;
+var DEFAULT_WALL_DATA: WallData
 
 
 func _ready():
 	decimal_regex = RegEx.new()
 	decimal_regex.compile('^\\s*[+-]?\\d*\\.?\\d+\\s*$')
+	DEFAULT_WALL_DATA = WallData.new()
+	DEFAULT_WALL_DATA.type = WallData.WallType.STATIC
+	DEFAULT_WALL_DATA.data = [1, 1, 2, 2]
 
 
 # Emitted when a user presses the Confirm button.
@@ -94,8 +98,8 @@ func get_oscillate_data():
 	]
 	var oscillate_data = [
 		vec,
-		validate_entry(oscillate_amplitude_entry, 'oscillate amplitude'),
-		validate_entry(oscillate_speed_entry, 'oscillate speed')
+		validate_entry(oscillate_speed_entry, 'oscillate speed'),
+		validate_entry(oscillate_amplitude_entry, 'oscillate amplitude')
 	]
 	if any_null(oscillate_data):
 		return null
@@ -136,10 +140,58 @@ func _on_confirm_button_pressed() -> void:
 		if motion_data == null:
 			return
 		
+		wall_data.type = WallData.WallType.DYNAMIC
 		wall_data.data = [motion_type, segment_data] + motion_data
 	
 	emit_signal('confirmed', wall_data)
 	hide()
+	
+
+func show_with_data(wall_data: WallData):
+	var is_dynamic = wall_data.type == WallData.WallType.DYNAMIC
+	var segment = wall_data.data if not is_dynamic else wall_data.data[1]
+	segment_x1_entry.text = str(segment[0])
+	segment_y1_entry.text = str(segment[1])
+	segment_x2_entry.text = str(segment[2])
+	segment_y2_entry.text = str(segment[3])
+	
+	dynamic_checkbox.button_pressed = is_dynamic
+	if is_dynamic:
+		var motion_type = wall_data.data[0]
+		motion_type_option.selected = motion_type
+		
+		if motion_type == 0:  # Oscillate
+			oscillate_controls_container.visible = true
+			rotate_controls_container.visible = false
+			
+			var oscillate_vec = wall_data.data[2]
+			oscillate_vector_x_entry.text = str(oscillate_vec[0])
+			oscillate_vector_y_entry.text = str(oscillate_vec[1])
+			oscillate_vector_z_entry.text = str(oscillate_vec[2])
+			
+			oscillate_speed_entry.text = str(wall_data.data[3])
+			oscillate_amplitude_entry.text = str(wall_data.data[4])
+		
+		elif motion_type == 1:  # Rotate
+			oscillate_controls_container.visible = false
+			rotate_controls_container.visible = true
+			
+			var rotate_axis = wall_data.data[2]
+			rotate_axis_x_entry.text = str(rotate_axis[0])
+			rotate_axis_y_entry.text = str(rotate_axis[1])
+			
+			rotate_speed_entry.text = str(wall_data.data[3])
+	
+	else:  # Static
+		oscillate_controls_container.visible = false
+		rotate_controls_container.visible = false
+		motion_type_option.selected = -1
+	
+	show()
+
+
+func show_default():
+	show_with_data(DEFAULT_WALL_DATA)
 
 
 func _on_cancel_button_pressed() -> void:
