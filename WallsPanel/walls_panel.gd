@@ -97,7 +97,7 @@ func generate_container(wall_data: WallData, index: int) -> PanelContainer:
 			wall_dialog.show_with_data(wall_data)
 	var on_delete_pressed = func():
 		root.all_wall_data.pop_at(wall_data.index)
-		for i in range(wall_data.index, len(root.all_wall_data)):
+		for i in range(wall_data.index, len(root.all_wall_data)):  # Readjust indices
 			root.all_wall_data[i].index -= 1
 		root.update_walls()
 	
