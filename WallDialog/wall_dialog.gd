@@ -63,7 +63,7 @@ func validate_entry(entry: LineEdit, entry_name: String):
 		error_dialog.dialog_text = 'Expected a decimal number for %s.' % entry_name
 		error_dialog.popup_centered()
 		return null
-	return float(entry.text)
+	return clampf(float(entry.text), 0.0, 10.0)
 
 
 # Returns true if any nulls exist in the array or any nested arrays.
