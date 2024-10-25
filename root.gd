@@ -11,6 +11,9 @@ enum WallEditType {
 }
 
 
+const GRID_OFFSET = Vector2(100, 0)
+
+
 # Array[WallData]
 var all_wall_data: Array = []
 

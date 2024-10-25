@@ -46,4 +46,4 @@ func update():
 
 
 func _process(delta: float) -> void:
-	global_transform.origin = get_viewport_rect().size / 2
+	global_transform.origin = get_viewport_rect().size / 2 + Root.GRID_OFFSET
