@@ -180,6 +180,7 @@ text = "Cancel"
 title = "Error!"
 ok_button_text = "Ok lemme fix that rq"
 
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="toggled" from="WindowContainer/DynamicCheckboxContainer/DynamicCheckBox" to="." method="_on_dynamic_check_box_toggled"]
 [connection signal="item_selected" from="WindowContainer/DynamicMotionTypeContainer/MotionTypeOption" to="." method="_on_motion_type_option_item_selected"]
 [connection signal="pressed" from="WindowContainer/ButtonsContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]

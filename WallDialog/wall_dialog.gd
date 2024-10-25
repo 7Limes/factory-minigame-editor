@@ -114,10 +114,6 @@ func get_rotate_data():
 	if any_null(rotate_data):
 		return null
 	return rotate_data
-	
-
-func _on_cancel_button_pressed() -> void:
-	hide()
 
 
 func _on_confirm_button_pressed() -> void:
@@ -143,4 +139,12 @@ func _on_confirm_button_pressed() -> void:
 		wall_data.data = [motion_type, segment_data] + motion_data
 	
 	emit_signal('confirmed', wall_data)
+	hide()
+
+
+func _on_cancel_button_pressed() -> void:
+	hide()
+
+
+func _on_close_requested() -> void:
 	hide()
