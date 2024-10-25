@@ -56,7 +56,7 @@ text = "New Wall
 
 [node name="WallsPanel" type="PanelContainer" parent="."]
 offset_top = 32.0
-offset_right = 260.0
+offset_right = 350.0
 offset_bottom = 532.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_sx7q6")
 
