@@ -5,7 +5,7 @@
 [node name="WallDialog" type="Window"]
 title = "Edit Wall"
 initial_position = 1
-size = Vector2i(417, 129)
+size = Vector2i(417, 100)
 wrap_controls = true
 transient = true
 exclusive = true
@@ -60,6 +60,7 @@ text = "Dynamic:"
 layout_mode = 2
 
 [node name="DynamicMotionTypeContainer" type="BoxContainer" parent="WindowContainer"]
+visible = false
 layout_mode = 2
 
 [node name="MotionTypeLabel" type="Label" parent="WindowContainer/DynamicMotionTypeContainer"]
@@ -68,7 +69,6 @@ text = "Motion Type:"
 
 [node name="MotionTypeOption" type="OptionButton" parent="WindowContainer/DynamicMotionTypeContainer"]
 layout_mode = 2
-disabled = true
 item_count = 2
 popup/item_0/text = "Oscillate"
 popup/item_1/text = "Rotate"

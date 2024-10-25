@@ -8,6 +8,7 @@ class_name WallDialog
 @onready var rotate_controls_container = $WindowContainer/RotateControlsContainer
 @onready var dynamic_checkbox = $WindowContainer/DynamicCheckboxContainer/DynamicCheckBox
 @onready var dynamic_motion_type_option = $WindowContainer/DynamicMotionTypeContainer/MotionTypeOption
+@onready var dynamic_motion_type_container = $WindowContainer/DynamicMotionTypeContainer
 
 @onready var segment_x1_entry = $WindowContainer/CoordinateContainer/X1Entry
 @onready var segment_y1_entry = $WindowContainer/CoordinateContainer/Y1Entry
@@ -44,7 +45,10 @@ signal confirmed(wall_data: WallData)
 
 
 func _on_dynamic_check_box_toggled(toggled_on: bool) -> void:
-	motion_type_option.disabled = not toggled_on
+	dynamic_motion_type_container.visible = toggled_on
+	if not toggled_on:
+		oscillate_controls_container.visible = false
+		rotate_controls_container.visible = false
 
 
 func _on_motion_type_option_item_selected(index: int) -> void:
@@ -186,6 +190,7 @@ func show_with_data(wall_data: WallData):
 		oscillate_controls_container.visible = false
 		rotate_controls_container.visible = false
 		motion_type_option.selected = -1
+		dynamic_motion_type_container.visible = false
 	
 	show()
 
