@@ -1,9 +1,10 @@
 extends BoxContainer
 
 
-@onready var root = $"../.."
-@onready var wall_drawer = $"../../WallDrawer"
-@onready var wall_dialog = $"../../WallDialog"
+@onready var root = $"../../.."
+@onready var wall_drawer = $"../../../WallDrawer"
+@onready var wall_dialog = $"../../../WallDialog"
+@onready var panel_node = $"../.."
 
 
 const WALL_CONTAINER_COLOR = Color(0.15, 0.15, 0.15)
@@ -17,6 +18,10 @@ const MOTION_TYPES = [
 	'oscillate',
 	'rotate'
 ]
+
+
+func _process(delta: float) -> void:
+	panel_node.size.y = get_viewport_rect().size.y-32
 
 
 func new_label(text: String) -> Label:
@@ -40,6 +45,7 @@ func generate_container(wall_data: WallData, index: int) -> PanelContainer:
 	var container = WallContainer.new()
 	container.all_walls_index = index
 	container.vertical = true
+	container.custom_minimum_size = Vector2(panel_node.size.x, 0)
 	
 	var type_label = new_label('Type: static' if wall_data.type == 0 else 'Type: dynamic')
 	container.add_child(type_label)
