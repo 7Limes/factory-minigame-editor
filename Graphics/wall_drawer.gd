@@ -42,7 +42,6 @@ func update():
 				add_line(wall_data.data[1], Color(0.5, 0.5, 1.0))
 			elif motion_type == 1:  # Rotate
 				add_line(wall_data.data[1], Color(1.0, 0.5, 0.5))
-			
 
 
 func _process(delta: float) -> void:

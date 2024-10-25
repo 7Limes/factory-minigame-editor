@@ -36,4 +36,3 @@ func _on_wall_dialog_confirmed(wall_data: WallData) -> void:
 		wall_data.index = wall_modify_index
 		all_wall_data[wall_modify_index] = wall_data
 		update_walls()
-	print(all_wall_data)
