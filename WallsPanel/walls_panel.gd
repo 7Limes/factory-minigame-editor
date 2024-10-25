@@ -43,12 +43,13 @@ func generate_container(wall_data: WallData, index: int) -> PanelContainer:
 	panel_container.add_theme_stylebox_override('panel', stylebox)
 	
 	var parent_container = BoxContainer.new()  # Contains wall container and delete button
-	parent_container.custom_minimum_size = Vector2(panel_node.size.x, 0)
+	parent_container.custom_minimum_size = Vector2(panel_node.size.x-10, 0)
 	
 	var container = WallContainer.new()
 	container.all_walls_index = index
 	container.vertical = true
 	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	container.add_theme_constant_override('separation', -3)
 	
 	var type_label = new_label('Type: static' if wall_data.type == 0 else 'Type: dynamic')
 	container.add_child(type_label)
