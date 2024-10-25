@@ -79,6 +79,8 @@ script = ExtResource("5_gh4vr")
 [node name="WallDialog" parent="." instance=ExtResource("4_s4300")]
 visible = false
 
+[node name="MessageDialog" type="AcceptDialog" parent="."]
+
 [connection signal="pressed" from="Menubar/LoadButton" to="Menubar" method="_on_load_button_pressed"]
 [connection signal="file_selected" from="Menubar/LoadButton/LoadFileDialog" to="Menubar" method="_on_load_file_dialog_file_selected"]
 [connection signal="pressed" from="Menubar/SaveButton" to="Menubar" method="_on_save_button_pressed"]
