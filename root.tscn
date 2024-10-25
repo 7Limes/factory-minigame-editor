@@ -104,6 +104,7 @@ select_all_on_focus = true
 [node name="GridGenerator" type="Node2D" parent="."]
 position = Vector2(500, 300)
 script = ExtResource("3_dpsan")
+spacing = 50
 
 [node name="WallDialog" parent="." instance=ExtResource("4_s4300")]
 visible = false
