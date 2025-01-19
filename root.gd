@@ -2,7 +2,8 @@ extends Node2D
 
 
 @onready var wall_drawer = $WallDrawer
-@onready var wall_container_box = $WallsPanel/ScrollContainer/WallContainerBox
+@onready var wall_container_box = %WallContainerBox
+
 
 # Whether the user is creating a new wall, or modifying an existing one
 enum WallEditType {
