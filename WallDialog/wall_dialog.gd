@@ -23,6 +23,7 @@ class_name WallDialog
 
 @onready var rotate_axis_x_entry = $WindowContainer/RotateControlsContainer/AxisContainer/AxisX
 @onready var rotate_axis_y_entry = $WindowContainer/RotateControlsContainer/AxisContainer/AxisY
+@onready var rotate_axis_center_button = $WindowContainer/RotateControlsContainer/AxisContainer/SetAxisToCenterButton
 @onready var rotate_speed_entry = $WindowContainer/RotateControlsContainer/SpeedContainer/SpeedEntry
 
 @onready var error_dialog = $ErrorDialog
@@ -62,12 +63,13 @@ func _on_motion_type_option_item_selected(index: int) -> void:
 
 # Shows an error and returns null if the given entry is not a decimal number, otherwise returns float.
 # Returns: Union[float, null]
-func validate_entry(entry: LineEdit, entry_name: String):
+func validate_entry(entry: LineEdit, entry_name: String, lower: float=0.0, upper: float=10.0):
 	if decimal_regex.search(entry.text) == null:
 		error_dialog.dialog_text = 'Expected a decimal number for %s.' % entry_name
 		error_dialog.popup_centered()
 		return null
-	return clampf(float(entry.text), 0.0, 10.0)
+	
+	return clampf(float(entry.text), lower, upper)
 
 
 # Returns true if any nulls exist in the array or any nested arrays.
@@ -96,14 +98,14 @@ func get_segment_data():
 
 func get_oscillate_data():
 	var vec = [
-		validate_entry(oscillate_vector_x_entry, "oscillate vector x"),
-		validate_entry(oscillate_vector_y_entry, "oscillate vector y"),
-		validate_entry(oscillate_vector_z_entry, "oscillate vector z"),
+		validate_entry(oscillate_vector_x_entry, "oscillate vector x", -10.0),
+		validate_entry(oscillate_vector_y_entry, "oscillate vector y", -10.0),
+		validate_entry(oscillate_vector_z_entry, "oscillate vector z", -10.0),
 	]
 	var oscillate_data = [
 		vec,
-		validate_entry(oscillate_speed_entry, 'oscillate speed'),
-		validate_entry(oscillate_amplitude_entry, 'oscillate amplitude')
+		validate_entry(oscillate_speed_entry, 'oscillate speed', -10.0),
+		validate_entry(oscillate_amplitude_entry, 'oscillate amplitude', -10.0)
 	]
 	if any_null(oscillate_data):
 		return null
@@ -117,7 +119,7 @@ func get_rotate_data():
 	]
 	var rotate_data = [
 		axis,
-		validate_entry(rotate_speed_entry, 'rotate speed')
+		validate_entry(rotate_speed_entry, 'rotate speed', -10.0)
 	]
 	if any_null(rotate_data):
 		return null
@@ -205,3 +207,15 @@ func _on_cancel_button_pressed() -> void:
 
 func _on_close_requested() -> void:
 	hide()
+
+
+func _on_set_axis_to_center_button_pressed() -> void:
+	var segment_data = get_segment_data()
+	if segment_data == null:
+		return
+		
+	var center_x = (segment_data[0] + segment_data[2]) / 2
+	var center_y = (segment_data[1] + segment_data[3]) / 2
+	rotate_axis_x_entry.text = str(center_x)
+	rotate_axis_y_entry.text = str(center_y)
+		
